@@ -3,7 +3,7 @@ name: Docker Image Scan
 on: [push]
 
 env:
-  USER: "ArniBananii" # Replace with your GitHub username
+  USER: "arnibananii" # Replace with your GitHub username
 
 jobs:
   trivy_scan:
