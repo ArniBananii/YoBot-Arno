@@ -3,7 +3,7 @@ name: Docker Image Scan
 on: [push]
 
 env:
-  USER: "aiboosts"
+  USER: "ArniBananii" # Replace with your GitHub username
 
 jobs:
   trivy_scan:
@@ -19,8 +19,8 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}  # Use the GitHub username (actor)
-          password: ${{ secrets.GHCR_TOKEN }}  # Use the secret token
+          username: ${{ github.actor }} # Use the GitHub username (actor)
+          password: ${{ secrets.GHCR_TOKEN }} # Use the secret token
 
       # Build the Docker image
       - name: Build the hello-docker Docker image
@@ -38,13 +38,13 @@ jobs:
         run: |
           trivy image --format json --output trivy_output.json ghcr.io/$USER/yobot:latest
         env:
-          TRIVY_SEVERITY: HIGH,CRITICAL  # Optional: Set severity levels to scan for --severity HIGH,CRITICAL --exit-code 1
-      
+          TRIVY_SEVERITY: HIGH,CRITICAL # Optional: Set severity levels to scan for --severity HIGH,CRITICAL --exit-code 1
+
       # Build the new Docker image with trivy_output.json
       - name: Build the new Docker image with trivy_output.json
         run: |
           docker build -t ghcr.io/$USER/yobot-with-trivy-output:latest -f Dockerfile.trivy-analysis .
-      
+
       # Push the Docker image to GitHub Container Registry
       - name: Push the Docker image to GitHub Container Registry
         run: |
